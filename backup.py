@@ -15,12 +15,12 @@ def fuzzifikasi_servis(kualitas):
     """Fungsi keanggotaan untuk kualitas servis."""
     rendah = max(0, min(1, (50 - kualitas) / 20))
     sedang = max(0, min(1, (kualitas - 30) / 30, (80 - kualitas) / 30))
-    tinggi = max(0, min(1, (kualitas - 60) / 40)) 
-    return {"rendah": rendah, "sedang": sedang, "tinggi": tinggi} 
+    tinggi = max(0, min(1, (kualitas - 60) / 20))
+    return {"rendah": rendah, "sedang": sedang, "tinggi": tinggi}
 
 def fuzzifikasi_harga(harga):
     """Fungsi keanggotaan untuk harga."""
-    murah = murah = max(0, min(1, (35000 - harga) / 10000))
+    murah = max(0, min(1, (40000 - harga) / 10000))
     sedang = max(0, min(1, (harga - 30000) / 10000, (50000 - harga) / 10000))
     mahal = max(0, min(1, (harga - 40000) / 10000))
     return {"murah": murah, "sedang": sedang, "mahal": mahal}
@@ -34,9 +34,9 @@ def inferensi(fuzzifikasi_servis, fuzzifikasi_harga):
         ("sedang", "murah"): "cukup",
         ("sedang", "sedang"): "baik",
         ("sedang", "mahal"): "cukup",
-        ("tinggi", "murah"): "sangat_baik",
-        ("tinggi", "sedang"): "baik",
-        ("tinggi", "mahal"): "cukup",
+        ("tinggi", "murah"): "baik",
+        ("tinggi", "sedang"): "sangat_baik",
+        ("tinggi", "mahal"): "baik",
     }
     hasil_inferensi = {"buruk": 0, "cukup": 0, "baik": 0, "sangat_baik": 0}
     for (servis, harga), kualitas in rules.items():
@@ -79,7 +79,7 @@ def main():
 
     hasil_evaluasi = []
     for index, row in data_restoran.iterrows():
-        id_pelanggan = row['id Pelanggan']
+        id_pelanggan = row['Id Pelanggan']
         kualitas_servis = row['Pelayanan']
         harga = row['harga']
 
